@@ -13,7 +13,7 @@ interface UserAndAllScores {
   scores: number[]
 }
 
-function findUsersScores(user: User, userScores: Score[]): UserAndAllScores {
+function findUsersScores(user: User, userScores: Score[]) {
   const allUsersScore = userScores
     .filter((score) => {
       return score.userId == user._id
@@ -27,14 +27,14 @@ function findUsersScores(user: User, userScores: Score[]): UserAndAllScores {
   }
 }
 
-function sortNumbersDescending(a: number, b: number): number {
+function sortNumbersDescending(a: number, b: number) {
   return b - a
 }
 
 function sortHighScoreResultDescending(
   a: UserAndAllScores,
   b: UserAndAllScores
-): number {
+) {
   return b.scores[0] - a.scores[0]
 }
 

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react'
 import {
   Box,
   FormControl,
@@ -30,7 +30,6 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
     }
   }
 
-  console.log(error)
   return (
     <Box w='300px'>
       <FormControl isRequired isInvalid={error}>
@@ -39,12 +38,14 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
           id='form-name'
           type='text'
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
         />
         {!error ? (
-          <FormHelperText>An actual name please</FormHelperText>
+          <FormHelperText>An actual name</FormHelperText>
         ) : (
-          <FormErrorMessage>Email is required.</FormErrorMessage>
+          <FormErrorMessage>Name is required.</FormErrorMessage>
         )}
 
         <FormLabel>Score:</FormLabel>
@@ -52,9 +53,11 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
           id='form-score'
           type='number'
           value={score}
-          onChange={(e) => setScore(parseInt(e.target.value))}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setScore(parseInt(e.target.value))
+          }
         />
-        <FormHelperText>Whole numbers only please</FormHelperText>
+        <FormHelperText>Whole numbers only</FormHelperText>
         <Button type='submit' onClick={onSubmit}>
           Submit
         </Button>

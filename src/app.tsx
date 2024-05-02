@@ -39,13 +39,13 @@ function createNewScoreAndUser(
   userArr: User[],
   scoreArr: Score[]
 ) {
-  let id
-  const userCheck = userArr.find(
+  let id: number
+  const userId = userArr.find(
     (user) => user.name.toLowerCase() == name.toLowerCase()
-  )
+  )?._id
 
-  if (userCheck) {
-    id = userCheck._id
+  if (userId) {
+    id = userId
   } else {
     id = userArr.length + 1
     userArr.push({ _id: id, name: name })
@@ -58,26 +58,29 @@ export default function App() {
   const [users, setUsers] = useState<User[]>(fileUsers)
   const [scores, setScores] = useState<Score[]>(fileScores)
 
+  function updateData(userArr: User[], scoreArr: Score[]) {
+    setUsers(userArr)
+    setScores(scoreArr)
+  }
+
   function enterNewScore(name: string, score: number) {
     const userArray = [...users]
     const scoreArray = [...scores]
 
     createNewScoreAndUser(name, score, userArray, scoreArray)
 
-    setUsers(userArray)
-    setScores(scoreArray)
+    updateData(userArray, scoreArray)
   }
 
   function handleSheetData(data: ExcelRow[]) {
     const userArray = [...users]
     const scoreArray = [...scores]
 
-    data.forEach((element) => {
-      createNewScoreAndUser(element.name, element.score, userArray, scoreArray)
+    data.forEach((row) => {
+      createNewScoreAndUser(row.name, row.score, userArray, scoreArray)
     })
 
-    setUsers(userArray)
-    setScores(scoreArray)
+    updateData(userArray, scoreArray)
   }
 
   return (
