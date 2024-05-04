@@ -16,23 +16,37 @@ interface EnterNewScoreProps {
 export default function EnterNewScore(props: EnterNewScoreProps) {
   const [name, setName] = useState<string>('')
   const [score, setScore] = useState<number>(0)
-  const [error, setError] = useState<boolean>(false)
+  const [nameError, setNameError] = useState<boolean>(false)
+  const [scoreError, setScoreError] = useState<boolean>(false)
+
+  function foundError() {
+    let foundErrors = false
+
+    if (name == '') {
+      foundErrors = true
+      setNameError(true)
+    } else setNameError(false)
+
+    if (isNaN(score)) {
+      foundErrors = true
+      setScoreError(true)
+    } else setScoreError(false)
+
+    return foundErrors
+  }
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    if (name == '') {
-      setError(true)
-    } else {
+    if (!foundError()) {
       props.createNew(name, score)
       setName('')
       setScore(0)
-      setError(false)
     }
   }
 
   return (
     <Box w='300px'>
-      <FormControl isRequired isInvalid={error}>
+      <FormControl isRequired isInvalid={nameError}>
         <FormLabel>Name:</FormLabel>
         <Input
           id='form-name'
@@ -42,12 +56,13 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
             setName(e.target.value)
           }
         />
-        {!error ? (
+        {!nameError ? (
           <FormHelperText>An actual name</FormHelperText>
         ) : (
           <FormErrorMessage>Name is required.</FormErrorMessage>
         )}
-
+      </FormControl>
+      <FormControl isRequired isInvalid={scoreError}>
         <FormLabel>Score:</FormLabel>
         <Input
           id='form-score'
@@ -57,11 +72,16 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
             setScore(parseInt(e.target.value))
           }
         />
-        <FormHelperText>Whole numbers only</FormHelperText>
-        <Button type='submit' onClick={onSubmit}>
-          Submit
-        </Button>
+
+        {!scoreError ? (
+          <FormHelperText>Whole numbers only</FormHelperText>
+        ) : (
+          <FormErrorMessage>Please input a number</FormErrorMessage>
+        )}
       </FormControl>
+      <Button type='submit' onClick={onSubmit}>
+        Submit
+      </Button>
     </Box>
   )
 }

@@ -5,8 +5,8 @@ import { palette } from '@northlight/tokens'
 import { ExcelDropzone, ExcelRow } from './excel-dropzone.jsx'
 import fileUsers from './users.ts'
 import fileScores from './scores.ts'
-import HighScore from './components/HighScore.tsx'
-import EnterNewScore from './components/EnterNewScore.tsx'
+import HighScore from './components/high-score.tsx'
+import EnterNewScore from './components/enter-new-score.tsx'
 
 interface ExternalLinkProps {
   href: string
@@ -58,18 +58,14 @@ export default function App() {
   const [users, setUsers] = useState<User[]>(fileUsers)
   const [scores, setScores] = useState<Score[]>(fileScores)
 
-  function updateData(userArr: User[], scoreArr: Score[]) {
-    setUsers(userArr)
-    setScores(scoreArr)
-  }
-
   function enterNewScore(name: string, score: number) {
     const userArray = [...users]
     const scoreArray = [...scores]
 
     createNewScoreAndUser(name, score, userArray, scoreArray)
 
-    updateData(userArray, scoreArray)
+    setUsers(userArray)
+    setScores(scoreArray)
   }
 
   function handleSheetData(data: ExcelRow[]) {
@@ -80,7 +76,8 @@ export default function App() {
       createNewScoreAndUser(row.name, row.score, userArray, scoreArray)
     })
 
-    updateData(userArray, scoreArray)
+    setUsers(userArray)
+    setScores(scoreArray)
   }
 
   return (
