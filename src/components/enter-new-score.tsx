@@ -8,6 +8,7 @@ import {
   Button,
   FormErrorMessage
 } from '@chakra-ui/react'
+import { H2 } from '@northlight/ui'
 
 interface EnterNewScoreProps {
   createNew(name: string, score: number): void
@@ -46,6 +47,7 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
 
   return (
     <Box w='300px'>
+      <H2 mb='4'>Enter new score</H2>
       <FormControl isRequired isInvalid={nameError}>
         <FormLabel>Name:</FormLabel>
         <Input
