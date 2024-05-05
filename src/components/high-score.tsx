@@ -14,7 +14,7 @@ interface UserAndAllScores {
   scores: number[]
 }
 
-export function findUsersScores(user: User, userScores: Score[]) {
+function findUsersScores(user: User, userScores: Score[]) {
   const allUsersScore = userScores
     .filter((score) => {
       return score.userId == user._id
@@ -32,10 +32,7 @@ function sortNumbersDescending(a: number, b: number) {
   return b - a
 }
 
-export function sortUserScoresDescending(
-  a: UserAndAllScores,
-  b: UserAndAllScores
-) {
+function sortUserScoresDescending(a: UserAndAllScores, b: UserAndAllScores) {
   return b.scores[0] - a.scores[0]
 }
 

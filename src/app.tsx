@@ -39,13 +39,13 @@ function createNewScoreAndUser(
   userArr: User[],
   scoreArr: Score[]
 ) {
-  let id: number
-  const userId = userArr.find(
-    (user) => user.name.toLowerCase() == name.toLowerCase()
-  )?._id
+  const user = userArr.find(
+    (user) => user.name.toLowerCase() === name.toLowerCase()
+  )
 
-  if (userId) {
-    id = userId
+  let id: number
+  if (user) {
+    id = user._id
   } else {
     id = userArr.length + 1
     userArr.push({ _id: id, name: name })

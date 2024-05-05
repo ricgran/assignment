@@ -23,7 +23,7 @@ export default function EnterNewScore(props: EnterNewScoreProps) {
   function foundError() {
     let foundErrors = false
 
-    if (name == '') {
+    if (name === '') {
       foundErrors = true
       setNameError(true)
     } else setNameError(false)

@@ -10,6 +10,8 @@ export default function HighScoreResult(props: HighScoreResultProps) {
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow(!show)
 
+  if (props.scores.length < 1) return null
+
   return (
     <Box w='150px' mb='20px' onClick={toggleShow} cursor={'pointer'}>
       <Flex>
